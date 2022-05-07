@@ -1,0 +1,85 @@
+<app-bread-crumb
+  [items]="[{text: 'Lançamentos'}]"
+></app-bread-crumb>
+
+<app-page-header 
+  page-title="Lançamentos" 
+  button-link="new"
+  button-text="+ Novo Lançamento"
+  button-class="btn-success"
+>
+</app-page-header>
+
+<div class="row mb-4">
+  <div class="col-md">    
+ 
+    <form [formGroup]="entryForm" (submit)="search()">
+
+      <div class="card">
+        
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="name">Nome</label>
+              <input id="name" type="text" class="form-control" formControlName="name"> 
+            </div>
+
+            <div class="form-group col-md-4">              
+              <label for="type">Tipo</label>
+              <select name="type" id="type" formControlName="type" class="form-control">
+                <option *ngFor="let option of typeOptions" [value]="option.value">{{ option.text }}</option>
+              </select>
+            </div>     -       
+          </div>
+          
+          <button type="submit" class="btn btn-primary  float-left mt-3">
+            Pesquisar
+          </button>
+        </div>
+      </div>     
+  
+    </form>
+
+  </div> 
+</div>
+
+<table class="table table-hover">
+  <thead>
+    <tr class="bg-primary text-light">
+      <th>Orçamento</th>
+      <th>Lançamento</th>
+      <th>Categorias</th>
+      <th class="text-right">Valor R$</th>
+      <th class="text-center">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let entry of resources">
+      <td>
+        {{ entry.budget.name }}
+      </td>
+      <td>
+        <strong>{{ entry.name }}</strong><br>
+        <small>{{ entry.date }}</small> <br>
+        <small *ngIf="entry.description">{{ entry.description }}</small>
+      </td>
+      <td>
+        {{ entry.category.name }}        
+      </td>
+      <td class="text-right">
+        <strong [class.text-success]="entry.type == 'revenue'"
+                [class.text-danger]="entry.type == 'expense'">
+          {{ entry.amount }}</strong> 
+          <br>
+          <span class="badge badge-light">{{ entry.paidText }}</span>       
+      </td>
+      <!-- nomedosite.com/entry/12/edit -->
+      <td class="text-center">
+        <a [routerLink]="[entry.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">Editar</a>
+        <button (click)="deleteResource(entry)" class="btn btn-outline-danger btn-sm mr-2">Excluir</button>
+        <a [routerLink]="[entry.id, 'details']" class="btn btn-outline-info btn-sm mr-2">Visualizar</a>
+      </td>
+    </tr>
+
+  </tbody>
+</table>

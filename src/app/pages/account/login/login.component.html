@@ -1,0 +1,35 @@
+<!-- <app-bread-crumb
+  [items]="[{text: 'Entrar', link: '/categories'}, {text: pageTitle}]"
+></app-bread-crumb> -->
+
+<!-- <app-page-header 
+  [page-title]="pageTitle" 
+>
+</app-page-header> -->
+
+<h2 class="text-center">Entrar</h2>
+
+<form [formGroup]="resourceForm" (submit)="onSubmit()">
+    <div class="form-group ">
+      <label for="email">E-mail</label>
+      <input id="email" type="email" class="form-control" formControlName="email" required>
+
+      <app-form-field-error [form-control]="resourceForm.get('email')">            
+      </app-form-field-error>
+    </div>        
+
+
+    <div class="form-group ">
+      <label for="password">Senha</label>
+      <input id="control" type="password" class="form-control" required formControlName="password">
+
+      <app-form-field-error [form-control]="resourceForm.get('password')">            
+      </app-form-field-error>
+    </div>
+
+    <button type="submit" [disabled]="submittingForm || resourceForm.invalid" class="btn btn-primary btn-block">
+      Entrar
+    </button>
+    
+    <button type="button" class="btn btn-link btn-block" routerLink="/account/create-account">Criar conta</button>
+</form>
